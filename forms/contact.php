@@ -1,23 +1,63 @@
+
+
 <?php
-  $receiving_email_address = 'shma.syd975@gmail.com';
+// Configuration
+$receiving_email_address = 'kitselite@gmail.com';
 
-  if( file_exists($php_email_form = '../assets/vendor/php-email-form/php-email-form.php' )) {
-    include( $php_email_form );
-  } else {
-    die( 'Unable to load the "PHP Email Form" Library!');
-  }
+// Validate form inputs
+if ($_SERVER["REQUEST_METHOD"] != "POST") {
+    die('Invalid request method');
+}
 
-  $contact = new PHP_Email_Form;
-  $contact->ajax = true;
-  
-  $contact->to = $receiving_email_address;
-  $contact->from_name = $_POST['name'];
-  $contact->from_email = $_POST['email'];
-  $contact->subject = $_POST['subject'];
+// Required fields
+$required_fields = ['name', 'email', 'subject', 'message'];
+foreach ($required_fields as $field) {
+    if (!isset($_POST[$field]) || empty(trim($_POST[$field]))) {
+        die("Error: {$field} is required");
+    }
+}
 
-  $contact->add_message( $_POST['name'], 'From');
-  $contact->add_message( $_POST['email'], 'Email');
-  $contact->add_message( $_POST['message'], 'Message', 10);
+// Validate email
+if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+    die('Invalid email format');
+}
 
-  echo $contact->send();
-?>
+// Sanitize inputs
+$name = htmlspecialchars(strip_tags($_POST['name']));
+$email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+$subject = htmlspecialchars(strip_tags($_POST['subject']));
+$message = htmlspecialchars(strip_tags($_POST['message']));
+
+// Prepare email headers
+$headers = array(
+    'From' => "{$name} <{$email}>",
+    'Reply-To' => $email,
+    'X-Mailer' => 'PHP/' . phpversion(),
+    'Content-Type' => 'text/html; charset=UTF-8'
+);
+
+// Prepare email body
+$email_body = "
+<html>
+<body>
+    <h3>New Contact Form Submission</h3>
+    <p><strong>From:</strong> {$name}</p>
+    <p><strong>Email:</strong> {$email}</p>
+    <p><strong>Subject:</strong> {$subject}</p>
+    <p><strong>Message:</strong><br>{$message}</p>
+</body>
+</html>
+";
+
+// Send email
+try {
+    $mail_sent = mail($receiving_email_address, $subject, $email_body, $headers);
+    
+    if ($mail_sent) {
+        echo json_encode(['status' => 'success', 'message' => 'Email sent successfully']);
+    } else {
+        echo json_encode(['status' => 'error', 'message' => 'Failed to send email']);
+    }
+} catch (Exception $e) {
+    echo json_encode(['status' => 'error', 'message' => 'An error occurred: ' . $e->getMessage()]);
+}
