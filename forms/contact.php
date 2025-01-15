@@ -1,8 +1,6 @@
-
-
 <?php
 // Configuration
-$receiving_email_address = 'syd.shma459@gmail.com';
+$receiving_email_address = 'kitselite@gmail.com';
 
 // Validate form inputs
 if ($_SERVER["REQUEST_METHOD"] != "POST") {
