@@ -1118,36 +1118,224 @@ section {
   }
 }
 
-/* Overall page feature */
-.features1 .row + .row {   
-  margin-top: 100px; 
+/* Overall factulty achievements page feature */
+.faculty-profiles {
+  background-color: #fafafa;
+  padding: 60px 0;
+  position: relative;
 }
 
-.features1 h3 {
-    font-weight: 400;
-    font-size: 27px; 
-    color: var(--secondary-brown);
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
-.features1 ul {
-  list-style: none;
-  padding: 0;
+.section-header {
+  text-align: center;
+  margin-bottom: 50px;
 }
 
-.features1 ul li {  
-  padding-bottom: 10px; 
-}  
-
-.features1 ul i {   
-  font-size: 20px;
-  padding-right: 4px;   
-  color: #846204; 
-}  
-
-.features1 p:last-child {   
-  margin-bottom: 0; 
+.section-header h2 {
+  color: #846204;
+  font-size: 36px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  font-family: 'Georgia', serif;
 }
 
+.header-line {
+  width: 120px;
+  height: 3px;
+  background: linear-gradient(to right, #846204, #b89649);
+  margin: 0 auto;
+  border-radius: 2px;
+}
+
+.profile-card {
+  margin-bottom: 40px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(132, 98, 4, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+  border: 1px solid rgba(132, 98, 4, 0.1);
+}
+
+.profile-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(132, 98, 4, 0.12);
+}
+
+.profile-content {
+  display: flex;
+  padding: 25px;
+  gap: 30px;
+  background: linear-gradient(to right, #fff, #fdfaf1);
+}
+
+.profile-image {
+  flex: 0 0 300px;
+}
+
+.profile-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.profile-card:hover .profile-image img {
+  transform: scale(1.02);
+}
+
+.profile-info {
+  flex: 1;
+  max-height: 300px;
+  overflow-y: auto;
+  padding-right: 15px;
+  scrollbar-width: thin;
+  scrollbar-color: #846204 #f4f4f4;
+}
+
+.profile-info::-webkit-scrollbar {
+  width: 6px;
+}
+
+.profile-info::-webkit-scrollbar-track {
+  background: #f4f4f4;
+  border-radius: 3px;
+}
+
+.profile-info::-webkit-scrollbar-thumb {
+  background-color: #846204;
+  border-radius: 3px;
+}
+
+.profile-info h3 {
+  color: #846204;
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  font-family: 'Georgia', serif;
+}
+
+.designation {
+  color: #666;
+  font-size: 16px;
+  margin-bottom: 12px;
+  font-style: italic;
+}
+
+.profile-text {
+  color: #333;
+  line-height: 1.6;
+}
+
+.intro {
+  font-size: 15px;
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgba(132, 98, 4, 0.1);
+}
+
+.achievements {
+  display: grid;
+  gap: 15px;
+}
+
+.achievement-item h4 {
+  color: #846204;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  position: relative;
+  padding-left: 18px;
+}
+
+.achievement-item h4::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 8px;
+  height: 8px;
+  background-color: #846204;
+  border-radius: 50%;
+}
+
+.achievement-item p {
+  color: #444;
+  font-size: 14px;
+  line-height: 1.5;
+  margin-left: 18px;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .profile-content {
+    flex-direction: column;
+    padding: 20px;
+  }
+  
+  .profile-image {
+    flex: 0 0 auto;
+    max-width: 250px;
+    margin: 0 auto;
+  }
+
+  .profile-info {
+    max-height: 250px;
+  }
+}
+
+@media (max-width: 768px) {
+  .section-header h2 {
+    font-size: 28px;
+  }
+  
+  .profile-card {
+    margin-bottom: 30px;
+  }
+  
+  .profile-content {
+    padding: 15px;
+  }
+  
+  .profile-info h3 {
+    font-size: 20px;
+  }
+  
+  .designation {
+    font-size: 14px;
+  }
+}
+
+/* Animation Classes */
+[data-aos="fade-up"] {
+  opacity: 0;
+  transform: translateY(15px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+[data-aos="fade-up"].aos-animate {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Print Styles */
+@media print {
+  .profile-card {
+    box-shadow: none;
+    border: 1px solid #ccc;
+    break-inside: avoid;
+  }
+  .profile-image img {
+    box-shadow: none;
+  }
+}
 
 /*--------------------------------------------------------------
 # Events
